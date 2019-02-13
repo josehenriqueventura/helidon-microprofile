@@ -1,0 +1,3 @@
+= MicroProfile
+
+This is an example of how to use MicroProfile Fault Tolerance in https://helidon.io[Helidon].
