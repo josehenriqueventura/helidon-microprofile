@@ -18,7 +18,7 @@ public class WeatherGateway {
     @Timeout(50)
     @Retry(maxRetries = 3)
     @Fallback(fallbackMethod = "statusOfWeekByMetEireann")
-    @CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)
+    @CircuitBreaker(requestVolumeThreshold=3, failureRatio=0.5, successThreshold=3)
     public String statusOfDayByAccuWeather(){
         return longRunningTask();
     }

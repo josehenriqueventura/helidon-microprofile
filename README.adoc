@@ -71,8 +71,29 @@ Server log
 
 [source,text]
 ----
-WARNING AccuWeather task has been interrupted.
-WARNING MetEireann fallback service has been requested due to AccuWeather timeout.
+INFO ...CommandRetrier : About to execute command with key statusOfDayByAccuWeather361059497
+INFO ...FaultToleranceCommand : Enter: breaker for statusOfDayByAccuWeather361059497 in state CLOSED_MP
+
+> WARNING io.jventura.weather.WeatherGateway : AccuWeather task has been interrupted.
+
+INFO ...CommandRetrier : About to execute command with key statusOfDayByAccuWeather361059497
+INFO ...FaultToleranceCommand : Enter: breaker for statusOfDayByAccuWeather361059497 in state CLOSED_MP
+
+> WARNING io.jventura.weather.WeatherGateway : AccuWeather task has been interrupted.
+
+INFO ...CommandRetrier : About to execute command with key statusOfDayByAccuWeather361059497
+INFO ...FaultToleranceCommand : Enter: breaker for statusOfDayByAccuWeather361059497 in state CLOSED_MP
+
+> WARNING io.jventura.weather.WeatherGateway : AccuWeather task has been interrupted.
+
+INFO ...CircuitBreakerHelper : Circuit breaker for statusOfDayByAccuWeather361059497 now in state OPEN_MP
+INFO ...FaultToleranceCommand : Attempting to trip circuit breaker for command statusOfDayByAccuWeather361059497
+INFO ...FaultToleranceCommand : Attempt to manually open breaker failed for command statusOfDayByAccuWeather36105949
+
+INFO ...CommandRetrier : About to execute command with key statusOfDayByAccuWeather361059497
+INFO ...FaultToleranceCommand : Enter: breaker for statusOfDayByAccuWeather361059497 in state OPEN_MP
+
+> WARNING io.jventura.weather.WeatherGateway : MetEireann backup service has been requested due to AccuWeather timeout
 ----
 
 Response
