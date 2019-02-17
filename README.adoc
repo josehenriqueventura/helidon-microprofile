@@ -42,13 +42,11 @@ public class WeatherGateway {
     public String statusOfDayByAccuWeather(){
         return longRunningTask();
     }
-
 ..
     public String statusOfWeekByMetEireann(){
         LOGGER.log(Level.WARNING, "MetEireann backup service has been requested due to AccuWeather timeout");
         return "A beautiful day";
     }
-
 ..
     private String longRunningTask(){
         try {
@@ -62,3 +60,42 @@ public class WeatherGateway {
 
 ----
 
+Day status call
+
+[source,text]
+----
+GET http://localhost:8080/weather/statusOfDay
+----
+
+Server log
+
+[source,text]
+----
+WARNING AccuWeather task has been interrupted.
+WARNING MetEireann fallback service has been requested due to AccuWeather timeout.
+----
+
+Response
+
+[source,text]
+----
+A beautiful day!
+----
+
+[discrete]
+=== Running the test
+
+You can also try it out using the
+link:src/test/java/io/jventura/weather/WeatherTest.java[WeatherTest.java]
+available in the project.
+
+[source,text]
+----
+mvn clean test
+----
+
+----
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+----
