@@ -36,7 +36,7 @@ class WeatherTest {
 
     @BeforeAll
     public static void startTheServer(){
-        server = Main.startServer();
+        server = Server.create().start();
     }
 
     @Test

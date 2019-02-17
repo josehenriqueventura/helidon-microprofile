@@ -16,11 +16,11 @@ public class WeatherGateway {
     private static final Logger LOGGER = Logger.getLogger(WeatherGateway.class.getName());
 
     @Timeout(50)
-    @Retry
+    @Retry(maxRetries = 3)
     @Fallback(fallbackMethod = "statusOfWeekByMetEireann")
     @CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)
     public String statusOfDayByAccuWeather(){
-        return longProcessingTask();
+        return longRunningTask();
     }
 
     /**
@@ -37,7 +37,7 @@ public class WeatherGateway {
      * 
      * @return null
      */
-    private String longProcessingTask(){
+    private String longRunningTask(){
         try {
             Thread.sleep(80);
         } catch (InterruptedException e) {

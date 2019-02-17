@@ -1,3 +1,64 @@
 = MicroProfile
 
-This is an example of how to use MicroProfile Fault Tolerance in https://helidon.io[Helidon].
+This example walks you through how to use MicroProfile Fault Tolerance in the Project https://helidon.io[Helidon].
+
+== Fault Tolerance MicroProfile feature
+
+MicroProfile brings to Java/Jakarta EE ecosystem resilient features as Circuit Breakers, Timeout, Fallback and Retry.
+
+[discrete]
+== Example
+
+[discrete]
+=== Run the application
+
+[source,text]
+----
+mvn clean install
+----
+
+[discrete]
+=== How does it work?
+
+When `WeatherGateway#statusOfDayByAccuWeather` is invoked, it calls another method that takes 80ms to complete
+its processing. Created intentionally to last 80ms, the method `longRunningTask` will have its processing interrupted
+due to the `@Timeout` threshold configured it's 50ms. In other words, any task that exceeds the threshold will be interrupted.
+
+`Retry Policy` detects that an error happened, the policy looks at the `maxRetries` and retry the operation accordingly to the value defined.
+As `longRunningTask` is meant to fail by our timeout criteria, `@Fallback` annotation take place with a fallback method
+ to ensure that the operation has another chance to concluded successfully.
+
+
+[source,java]
+----
+@RequestScoped
+public class WeatherGateway {
+..
+
+    @Timeout(50)
+    @Retry(maxRetries = 3)
+    @Fallback(fallbackMethod = "statusOfWeekByMetEireann")
+    @CircuitBreaker(requestVolumeThreshold=2, failureRatio=0.5, delay=5000, successThreshold=2)
+    public String statusOfDayByAccuWeather(){
+        return longRunningTask();
+    }
+
+..
+    public String statusOfWeekByMetEireann(){
+        LOGGER.log(Level.WARNING, "MetEireann backup service has been requested due to AccuWeather timeout");
+        return "A beautiful day";
+    }
+
+..
+    private String longRunningTask(){
+        try {
+            Thread.sleep(80);
+        } catch (InterruptedException e) {
+            LOGGER.log(Level.WARNING,"AccuWeather task has been interrupted.");
+        }
+        return null;
+    }
+}
+
+----
+
