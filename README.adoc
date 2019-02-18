@@ -1,6 +1,6 @@
 = MicroProfile
 
-This example walks you through how to use MicroProfile Fault Tolerance in the Project https://helidon.io[Helidon].
+This example walks you through how to use MicroProfile Fault Tolerance in the https://helidon.io[Helidon] Project.
 
 == Fault Tolerance MicroProfile feature
 
