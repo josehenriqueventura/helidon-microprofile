@@ -2,7 +2,7 @@ package io.jventura.weather;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -11,14 +11,14 @@ import org.eclipse.microprofile.faulttolerance.Timeout;
 /**
  * @author Jose Henrique Ventura 03 Feb 2019
  */
-@RequestScoped
+@ApplicationScoped
 public class WeatherGateway {
     private static final Logger LOGGER = Logger.getLogger(WeatherGateway.class.getName());
 
     @Timeout(50)
     @Retry(maxRetries = 3)
     @Fallback(fallbackMethod = "statusOfWeekByMetEireann")
-    @CircuitBreaker(requestVolumeThreshold=3, failureRatio=0.5, successThreshold=3)
+    @CircuitBreaker(requestVolumeThreshold=3, failureRatio=1, successThreshold=3)
     public String statusOfDayByAccuWeather(){
         return longRunningTask();
     }

@@ -20,7 +20,7 @@ mvn clean package && java -jar target/helidon-microprofile.jar
 [discrete]
 === How does it work?
 
-When `WeatherGateway#statusOfDayByAccuWeather` is invoked, it calls another method that takes 80ms to complete
+When `statusOfDayByAccuWeather` is invoked, it calls another method that takes 80ms to complete
 its processing. Created intentionally to last 80ms, the method `longRunningTask` will have its processing interrupted
 due to the `@Timeout` threshold configured it's 50ms. In other words, any task that exceeds the threshold will be interrupted.
 
@@ -31,7 +31,7 @@ As `longRunningTask` is meant to fail by our timeout criteria, `@Fallback` annot
 
 [source,java]
 ----
-@RequestScoped
+@ApplicationScoped
 public class WeatherGateway {
 ..
 
