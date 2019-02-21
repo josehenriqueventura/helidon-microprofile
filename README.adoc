@@ -20,11 +20,9 @@ mvn clean package && java -jar target/helidon-microprofile.jar
 [discrete]
 === How does it work?
 
-When `statusOfDayByAccuWeather` is invoked, it calls another method that takes 80ms to complete
-its processing. Created intentionally to last 80ms, the method `longRunningTask` will have its processing interrupted
-due to the `@Timeout` threshold configured it's 50ms. In other words, any task that exceeds the threshold will be interrupted.
+When `statusOfDayByAccuWeather` is invoked, it calls `longRunningTask` that hangs for 80ms which causes the interruption of `statusOfDayByAccuWeather` due to the threshold of `@Timeout` annotation that is set up for 50ms only. When the interruption happens, an exception is thrown and it actives the `Retry Policy` which detects that an error happened
+and repeat the same operation accordingly to the value defined by `maxRetries`.
 
-`Retry Policy` detects that an error happened, the policy looks at the `maxRetries` and retry the operation accordingly to the value defined.
 As `longRunningTask` is meant to fail by our timeout criteria, `@Fallback` annotation take place with a fallback method
  to ensure that the operation has another chance to concluded successfully.
 
