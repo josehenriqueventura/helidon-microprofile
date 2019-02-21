@@ -10,7 +10,7 @@ MicroProfile brings to Java/Jakarta EE ecosystem resilient features as Circuit B
 == Example
 
 [discrete]
-=== Run the application
+=== Running the application
 
 [source,text]
 ----
